@@ -22,5 +22,21 @@ class User {
         
         return $stmt;
     }
+
+    public function tieneAccesoArea($tier_cliente, $area_solicitada) {
+        // Mapa de accesos con jerarquía acumulativa
+        $permisos = [
+            'Bronce'   => ['restaurant'],
+            'Plata'    => ['restaurant', 'promociones'],
+            'Oro'      => ['restaurant', 'promociones', 'antro'],
+            'Diamante' => ['restaurant', 'promociones', 'antro', 'cabaret']
+        ];
+
+        // Verificamos si el área solicitada está en el array de permisos de su nivel
+        if (isset($permisos[$tier_cliente]) && in_array($area_solicitada, $permisos[$tier_cliente])) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>
